@@ -1,0 +1,12 @@
+.profile__info {
+  position: relative;
+  margin: auto 0;
+  padding-left: 30px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .profile__info {
+    margin: auto;
+    padding: 0;
+  }
+}
