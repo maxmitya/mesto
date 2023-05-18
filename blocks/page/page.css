@@ -5,3 +5,9 @@
   max-width: 880px;
   min-width: 320px;
 }
+
+@media (min-width: 768px) and (max-width: 920px) {
+  .page {
+    padding: 0 20px 0 20px;
+  }
+}

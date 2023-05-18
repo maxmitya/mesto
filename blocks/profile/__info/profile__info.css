@@ -1,12 +1,15 @@
 .profile__info {
-  position: relative;
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-template-rows: repeat(2, 1fr);
   margin: auto 0;
   padding-left: 30px;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
   .profile__info {
-    margin: auto;
+    margin: 26px auto 0;
     padding: 0;
+    grid-template-columns: 190px auto;
   }
 }
