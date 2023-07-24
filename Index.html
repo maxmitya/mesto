@@ -17,10 +17,10 @@
         <img src="images/avatar.jpg" alt="Аватар профиля" class="profile__avatar" />
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button type="button" id="open-popup" class="profile__edit-button"></button>
+          <button type="button" id="open-popup-edit" class="profile__edit-button"></button>
           <p class="profile__profession">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button"></button>
+        <button type="button" id="open-popup-add" class="profile__add-button"></button>
       </section>
 
       <section class="cards">
@@ -30,6 +30,7 @@
             <h2 class="card__title">Карачаевск</h2>
             <button type="button" id="like-button-1" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
 
         <div class="card">
@@ -38,6 +39,7 @@
             <h2 class="card__title">Гора Эльбрус</h2>
             <button type="button" id="like-button-2" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
 
         <div class="card">
@@ -46,6 +48,7 @@
             <h2 class="card__title">Домбай</h2>
             <button type="button" id="like-button-3" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
 
         <div class="card">
@@ -54,6 +57,7 @@
             <h2 class="card__title">Гора Эльбрус</h2>
             <button type="button" id="like-button-4" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
 
         <div class="card">
@@ -62,6 +66,7 @@
             <h2 class="card__title">Домбай</h2>
             <button type="button" id="like-button-5" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
 
         <div class="card">
@@ -70,6 +75,7 @@
             <h2 class="card__title">Карачаево-Черкесия</h2>
             <button type="button" id="like-button-6" class="card__button"></button>
           </div>
+          <button type="button" class="card__trash"></button>
         </div>
       </section>
     </main>
@@ -86,8 +92,43 @@
           <input id="profession-input" type="text" name="profession" class="popup__input" />
           <button type="submit" class="popup__submit">Сохранить</button>
         </form>
-        <button type="button" id="close-popup" class="popup__close"></button>
+        <button type="button" id="close-popup-edit" class="popup__close"></button>
       </div>
     </section>
+
+    <section id="add-popup" class="popup">
+      <div class="popup__container">
+        <form id="add-form" name="form" class="popup__form">
+          <h2 class="popup__heading">Новое место</h2>
+          <input
+            id="title-input"
+            type="text"
+            name="title"
+            placeholder="Название"
+            class="popup__input"
+          />
+          <input
+            id="image-input"
+            type="text"
+            name="image"
+            placeholder="Ссылка на картинку"
+            class="popup__input"
+          />
+          <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+        <button type="button" id="close-popup-add" class="popup__close"></button>
+      </div>
+    </section>
+
+    <template id="card-template">
+      <div class="card">
+        <img src="" alt="" id="card-image" class="card__image" />
+        <div class="card__name">
+          <h2 id="card-title" class="card__title"></h2>
+          <button type="button" id="" class="card__button"></button>
+        </div>
+        <button type="button" class="card__trash"></button>
+      </div>
+    </template>
   </body>
 </html>
