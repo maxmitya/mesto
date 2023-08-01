@@ -37,6 +37,79 @@ const cardFromTemplate = cardTemplate.querySelector('.card');
 //Переменная секции с карточками
 const cards = document.querySelector('.cards');
 
+//Переменная попапа увеличенной картинки
+const imagePopup = document.querySelector('#image-popup');
+
+// Переменная увеличенной картинки
+const bigPopupImage = imagePopup.querySelector('.popup__img');
+
+// Переменная заголовка увеличенной картинки
+const bigPopupTitle = imagePopup.querySelector('.popup__title');
+
+//Переменная кнопки открытия попапа редактирования профиля
+const openPopupEdit = document.querySelector('#open-popup-edit');
+
+//Переменная кнопки закрытия попапа редактирования профиля
+const closePopupEdit = document.querySelector('#close-popup-edit');
+
+//Переменная кнопки открытия попапа добавления карточки
+const openPopupAdd = document.querySelector('#open-popup-add');
+
+//Переменная кнопки закрытия попапа добавления карточки
+const closePopupAdd = document.querySelector('#close-popup-add');
+
+//Функция открытия попапа
+function openPopupFunction(popup) {
+  popup.classList.add('popup_opened');
+}
+
+//Функция закрытия попапа
+function closePopupFunction(popup) {
+  popup.classList.remove('popup_opened');
+}
+
+//Слушатель нажатия на кнопку открытия попапа редактирования
+openPopupEdit.addEventListener('click', function () {
+  openPopupFunction(editPopup);
+  nameInput.value = profileName.textContent;
+  professionInput.value = profileProfession.textContent;
+});
+
+//Слушатель нажатия на кнопку закрытия попапа редактирования
+closePopupEdit.addEventListener('click', function () {
+  closePopupFunction(editPopup);
+});
+
+//Слушатель нажатия на кнопку Enter в форме попапа редактирования
+editForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  profileProfession.textContent = professionInput.value;
+  profileName.textContent = nameInput.value;
+  closePopupFunction(editPopup);
+});
+
+//Слушатель нажатия на кнопку открытия попапа добавления
+openPopupAdd.addEventListener('click', function () {
+  openPopupFunction(addPopup);
+});
+
+//Слушатель нажатия на кнопку закрытия попапа добавления
+closePopupAdd.addEventListener('click', function () {
+  closePopupFunction(addPopup);
+});
+
+//Слушатель нажатия на кнопку Enter в форме попапа создания новой карточки
+addForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  createCard(titleInput.value, imageInput.value);
+
+  titleInput.value = '';
+  imageInput.value = '';
+
+  closePopupFunction(addPopup);
+});
+
 // Массив с новыми карточками
 const initialCards = [
   {
@@ -65,100 +138,14 @@ const initialCards = [
   }
 ];
 
-//Функция открытия попапа
-function openPopupFunction(popup) {
-  popup.classList.add('popup_opened');
-}
-
-//Функция закрытия попапа
-function closePopupFunction(popup) {
-  popup.classList.remove('popup_opened');
-}
-
-//Переменная кнопки открытия попапа редактирования профиля
-const openPopupEdit = document.querySelector('#open-popup-edit');
-
-//Слушатель нажатия на кнопку открытия попапа редактирования
-openPopupEdit.addEventListener('click', function () {
-  openPopupFunction(editPopup);
-
-  nameInput.value = profileName.textContent;
-
-  professionInput.value = profileProfession.textContent;
-});
-
-//Переменная кнопки закрытия попапа редактирования профиля
-const closePopupEdit = document.querySelector('#close-popup-edit');
-
-//Слушатель нажатия на кнопку закрытия попапа редактирования
-closePopupEdit.addEventListener('click', function () {
-  closePopupFunction(editPopup);
-});
-
-//Слушатель нажатия на кнопку Enter в форме попапа редактирования
-editForm.addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  profileProfession.textContent = professionInput.value;
-
-  profileName.textContent = nameInput.value;
-
-  closePopupFunction(editPopup);
-});
-
-//Переменная кнопки открытия попапа добавления карточки
-const openPopupAdd = document.querySelector('#open-popup-add');
-
-//Слушатель нажатия на кнопку открытия попапа добавления
-openPopupAdd.addEventListener('click', function () {
-  openPopupFunction(addPopup);
-});
-
-//Переменная кнопки закрытия попапа добавления карточки
-const closePopupAdd = document.querySelector('#close-popup-add');
-
-//Слушатель нажатия на кнопку закрытия попапа добавления
-closePopupAdd.addEventListener('click', function () {
-  closePopupFunction(addPopup);
-});
-
-//Слушатель нажатия на кнопку Enter в форме попапа создания новой карточки
-addForm.addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  const newCard = cardFromTemplate.cloneNode(true);
-
-  const cardTitle = newCard.querySelector('.card__title');
-  const cardImg = newCard.querySelector('.card__image');
-
-  cardTitle.textContent = titleInput.value;
-  cardImg.src = imageInput.value;
-
-  const likeButton = newCard.querySelector('.card__button');
-  likeButton.addEventListener('click', function (event) {
-    event.target.classList.toggle('card__button_active');
-  });
-
-  const delButton = newCard.querySelector('.card__trash');
-  delButton.addEventListener('click', function (event) {
-    const element = event.target.closest('.card');
-    element.remove();
-  });
-
-  cards.prepend(newCard);
-
-  closePopupFunction(addPopup);
-});
-
 // Функция создания карточек из массива
-function createCard(item) {
+function createCard(title, link) {
   const newCard = cardFromTemplate.cloneNode(true);
-
   const cardTitle = newCard.querySelector('.card__title');
   const cardImg = newCard.querySelector('.card__image');
 
-  cardTitle.textContent = item.name;
-  cardImg.src = item.link;
+  cardTitle.textContent = title;
+  cardImg.src = link;
 
   const delButton = newCard.querySelector('.card__trash');
   delButton.addEventListener('click', function (event) {
@@ -170,35 +157,31 @@ function createCard(item) {
   likeButton.addEventListener('click', function (event) {
     event.target.classList.toggle('card__button_active');
   });
-
-  // Переменная попапа увеличенной картинки
-  const imagePopup = document.querySelector('#image-popup');
-
-  // Переменная увеличенной картинки
-  const bigPopupImage = imagePopup.querySelector('.popup__img');
-
-  // Переменная заголовка увеличенной картинки
-  const bigPopupTitle = imagePopup.querySelector('.popup__title');
 
   cardImg.addEventListener('click', function () {
     imagePopup.classList.add('popup_opened');
-
     bigPopupTitle.textContent = cardTitle.textContent;
-
     bigPopupImage.src = cardImg.src;
   });
 
   const closeImagePopup = imagePopup.querySelector('#close-popup-image');
-
   closeImagePopup.addEventListener('click', function () {
     imagePopup.classList.remove('popup_opened');
   });
 
+  imagePopup.addEventListener('click', function (event) {
+    if (event.target == event.currentTarget) {
+      closePopupFunction(imagePopup);
+    }
+  });
+
+  cards.prepend(newCard);
+
   return newCard;
 }
 
-// Метот перебора массива для создания карточек
-initialCards.forEach(function (item) {
-  const newCard = createCard(item);
+// Метод перебора массива для создания карточек
+initialCards.forEach(function (object) {
+  const newCard = createCard(object.name, object.link);
   cards.prepend(newCard);
 });
