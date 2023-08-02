@@ -68,11 +68,21 @@ function closePopupFunction(popup) {
   popup.classList.remove('popup_opened');
 }
 
+// Функция закрытия попапа кликом по заливке
+function closePopupByOverlay(popup) {
+  popup.addEventListener('click', function (event) {
+    if (event.target == event.currentTarget) {
+      closePopupFunction(popup);
+    }
+  });
+}
+
 //Слушатель нажатия на кнопку открытия попапа редактирования
 openPopupEdit.addEventListener('click', function () {
   openPopupFunction(editPopup);
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
+  closePopupByOverlay(editPopup);
 });
 
 //Слушатель нажатия на кнопку закрытия попапа редактирования
@@ -91,6 +101,7 @@ editForm.addEventListener('submit', function (event) {
 //Слушатель нажатия на кнопку открытия попапа добавления
 openPopupAdd.addEventListener('click', function () {
   openPopupFunction(addPopup);
+  closePopupByOverlay(addPopup);
 });
 
 //Слушатель нажатия на кнопку закрытия попапа добавления
@@ -106,6 +117,8 @@ addForm.addEventListener('submit', function (event) {
 
   titleInput.value = '';
   imageInput.value = '';
+
+  closePopupByOverlay(addPopup);
 
   closePopupFunction(addPopup);
 });
@@ -138,6 +151,12 @@ const initialCards = [
   }
 ];
 
+// Метод перебора массива для создания карточек
+initialCards.forEach(function (object) {
+  const newCard = createCard(object.name, object.link);
+  cards.prepend(newCard);
+});
+
 // Функция создания карточек из массива
 function createCard(title, link) {
   const newCard = cardFromTemplate.cloneNode(true);
@@ -146,6 +165,7 @@ function createCard(title, link) {
 
   cardTitle.textContent = title;
   cardImg.src = link;
+  cardImg.alt = cardTitle.textContent;
 
   const delButton = newCard.querySelector('.card__trash');
   delButton.addEventListener('click', function (event) {
@@ -159,9 +179,10 @@ function createCard(title, link) {
   });
 
   cardImg.addEventListener('click', function () {
-    imagePopup.classList.add('popup_opened');
+    openPopupFunction(imagePopup);
     bigPopupTitle.textContent = cardTitle.textContent;
     bigPopupImage.src = cardImg.src;
+    bigPopupImage.alt = cardImg.alt;
   });
 
   const closeImagePopup = imagePopup.querySelector('#close-popup-image');
@@ -169,19 +190,9 @@ function createCard(title, link) {
     imagePopup.classList.remove('popup_opened');
   });
 
-  imagePopup.addEventListener('click', function (event) {
-    if (event.target == event.currentTarget) {
-      closePopupFunction(imagePopup);
-    }
-  });
+  closePopupByOverlay(imagePopup);
 
   cards.prepend(newCard);
 
   return newCard;
 }
-
-// Метод перебора массива для создания карточек
-initialCards.forEach(function (object) {
-  const newCard = createCard(object.name, object.link);
-  cards.prepend(newCard);
-});
