@@ -17,67 +17,18 @@
         <img src="images/avatar.jpg" alt="Аватар профиля" class="profile__avatar" />
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button type="button" id="open-popup-edit" class="profile__edit-button"></button>
+          <button
+            type="button"
+            id="open-popup-edit"
+            aria-label="Edit"
+            class="profile__edit-button"
+          ></button>
           <p class="profile__profession">Исследователь океана</p>
         </div>
         <button type="button" id="open-popup-add" class="profile__add-button"></button>
       </section>
 
-      <section class="cards">
-        <!-- <div class="card">
-          <img src="images/card1.jpg" alt="Карачаевск" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Карачаевск</h2>
-            <button type="button" id="like-button-1" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div>
-
-        <div class="card">
-          <img src="images/card2.jpg" alt="Гора Эльбрус" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Гора Эльбрус</h2>
-            <button type="button" id="like-button-2" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div>
-
-        <div class="card">
-          <img src="images/card3.jpg" alt="Домбай" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Домбай</h2>
-            <button type="button" id="like-button-3" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div>
-
-        <div class="card">
-          <img src="images/card4.jpg" alt="Гора Эльбрус" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Гора Эльбрус</h2>
-            <button type="button" id="like-button-4" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div>
-
-        <div class="card">
-          <img src="images/card5.jpg" alt="Домбай" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Домбай</h2>
-            <button type="button" id="like-button-5" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div>
-
-        <div class="card">
-          <img src="images/card6.jpg" alt="Карачаево-Черкесия" class="card__image" />
-          <div class="card__name">
-            <h2 class="card__title">Карачаево-Черкесия</h2>
-            <button type="button" id="like-button-6" class="card__button"></button>
-          </div>
-          <button type="button" class="card__trash"></button>
-        </div> -->
-      </section>
+      <section class="cards"></section>
     </main>
 
     <footer class="footer">
@@ -88,8 +39,22 @@
       <div class="popup__container">
         <form id="edit-form" name="form" class="popup__form">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <input id="name-input" type="text" name="name" class="popup__input" />
-          <input id="profession-input" type="text" name="profession" class="popup__input" />
+          <input
+            id="name-input"
+            type="text"
+            name="name"
+            placeholder="О себе"
+            required
+            class="popup__input"
+          />
+          <input
+            id="profession-input"
+            type="text"
+            name="profession"
+            placeholder="Имя"
+            required
+            class="popup__input"
+          />
           <button type="submit" class="popup__submit">Сохранить</button>
         </form>
         <button type="button" id="close-popup-edit" class="popup__close"></button>
@@ -109,7 +74,7 @@
           />
           <input
             id="image-input"
-            type="text"
+            type="url"
             name="image"
             placeholder="Ссылка на картинку"
             class="popup__input"
@@ -120,7 +85,7 @@
       </div>
     </section>
 
-    <section id="image-popup" class="popup">
+    <section id="image-popup" class="popup image-popup-overlay">
       <div class="popup__img-container">
         <img src="#" alt="" class="popup__img" />
         <h2 class="popup__title"></h2>
