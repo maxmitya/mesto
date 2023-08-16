@@ -4,6 +4,12 @@ const editPopup = document.querySelector('#edit-popup');
 //Переменная попапа добавления карточки
 const addPopup = document.querySelector('#add-popup');
 
+//Переменная формы попапа редактирования профиля
+const editForm = document.querySelector('#edit-form');
+
+//Переменная формы попапа добавления карточки
+const addForm = document.querySelector('#add-form');
+
 //Переменная имени профиля
 const profileName = document.querySelector('.profile__name');
 
@@ -11,22 +17,16 @@ const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
 
 //Переменная поля ввода имени попапа редактирования
-const nameInput = document.querySelector('#name-input');
+const nameInput = editForm.querySelector('#name-input');
 
 //Переменная поля ввода проффессии попапа редактирования
-const professionInput = document.querySelector('#profession-input');
+const professionInput = editForm.querySelector('#profession-input');
 
 //Переменная поля ввода заголовка попапа добавления карточки
-const titleInput = document.querySelector('#title-input');
+const titleInput = addForm.querySelector('#title-input');
 
 //Переменная поля ввода ссылки на изображение попапа добавления карточки
-const imageInput = document.querySelector('#image-input');
-
-//Переменная формы попапа редактирования профиля
-const editForm = document.querySelector('#edit-form');
-
-//Переменная формы попапа добавления карточки
-const addForm = document.querySelector('#add-form');
+const imageInput = addForm.querySelector('#image-input');
 
 //Переменная заготовки (template) новой карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -77,6 +77,15 @@ function initClosePopupByOverlay(popup) {
   });
 }
 
+// Функция закрытия попапа кликом на Esc
+function initClosePopupByEscape(popup) {
+  window.addEventListener('keydown', function (event) {
+    if (event.code == 'Escape') {
+      closePopup(popup);
+    }
+  });
+}
+
 //Слушатель нажатия на кнопку открытия попапа редактирования
 openPopupEdit.addEventListener('click', function () {
   openPopup(editPopup);
@@ -85,6 +94,7 @@ openPopupEdit.addEventListener('click', function () {
 });
 
 initClosePopupByOverlay(editPopup);
+initClosePopupByEscape(editPopup);
 
 //Слушатель нажатия на кнопку закрытия попапа редактирования
 closePopupEdit.addEventListener('click', function () {
@@ -105,6 +115,7 @@ openPopupAdd.addEventListener('click', function () {
 });
 
 initClosePopupByOverlay(addPopup);
+initClosePopupByEscape(addPopup);
 
 //Слушатель нажатия на кнопку закрытия попапа добавления
 closePopupAdd.addEventListener('click', function () {
@@ -187,6 +198,7 @@ function createCard(title, link) {
   });
 
   initClosePopupByOverlay(imagePopup);
+  initClosePopupByEscape(imagePopup);
 
   // cards.prepend(newCard);
 
