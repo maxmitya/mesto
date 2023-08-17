@@ -1,71 +1,34 @@
-//Переменная попапа редактирования профиля
 const editPopup = document.querySelector('#edit-popup');
-
-//Переменная попапа добавления карточки
 const addPopup = document.querySelector('#add-popup');
-
-//Переменная формы попапа редактирования профиля
 const editForm = document.querySelector('#edit-form');
-
-//Переменная формы попапа добавления карточки
 const addForm = document.querySelector('#add-form');
-
-//Переменная имени профиля
 const profileName = document.querySelector('.profile__name');
-
-//Переменная проффесии профиля
 const profileProfession = document.querySelector('.profile__profession');
-
-//Переменная поля ввода имени попапа редактирования
 const nameInput = editForm.querySelector('#name-input');
-
-//Переменная поля ввода проффессии попапа редактирования
 const professionInput = editForm.querySelector('#profession-input');
-
-//Переменная поля ввода заголовка попапа добавления карточки
 const titleInput = addForm.querySelector('#title-input');
-
-//Переменная поля ввода ссылки на изображение попапа добавления карточки
 const imageInput = addForm.querySelector('#image-input');
-
-//Переменная заготовки (template) новой карточки
 const cardTemplate = document.querySelector('#card-template').content;
-
-//Переменная карточки из template
 const cardFromTemplate = cardTemplate.querySelector('.card');
-
-//Переменная секции с карточками
 const cards = document.querySelector('.cards');
-
-//Переменная попапа увеличенной картинки
 const imagePopup = document.querySelector('#image-popup');
-
-// Переменная увеличенной картинки
 const bigPopupImage = imagePopup.querySelector('.popup__img');
-
-// Переменная заголовка увеличенной картинки
 const bigPopupTitle = imagePopup.querySelector('.popup__title');
-
-//Переменная кнопки открытия попапа редактирования профиля
 const openPopupEdit = document.querySelector('#open-popup-edit');
-
-//Переменная кнопки закрытия попапа редактирования профиля
 const closePopupEdit = document.querySelector('#close-popup-edit');
-
-//Переменная кнопки открытия попапа добавления карточки
 const openPopupAdd = document.querySelector('#open-popup-add');
-
-//Переменная кнопки закрытия попапа добавления карточки
 const closePopupAdd = document.querySelector('#close-popup-add');
 
-//Функция открытия попапа
+//Функция открытия попа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  window.addEventListener('keydown', initClosePopupByEscape(popup));
 }
 
 //Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  window.removeEventListener('keydown', initClosePopupByEscape(popup));
 }
 
 // Функция закрытия попапа кликом по заливке
@@ -94,7 +57,6 @@ openPopupEdit.addEventListener('click', function () {
 });
 
 initClosePopupByOverlay(editPopup);
-initClosePopupByEscape(editPopup);
 
 //Слушатель нажатия на кнопку закрытия попапа редактирования
 closePopupEdit.addEventListener('click', function () {
@@ -115,7 +77,6 @@ openPopupAdd.addEventListener('click', function () {
 });
 
 initClosePopupByOverlay(addPopup);
-initClosePopupByEscape(addPopup);
 
 //Слушатель нажатия на кнопку закрытия попапа добавления
 closePopupAdd.addEventListener('click', function () {
@@ -198,7 +159,6 @@ function createCard(title, link) {
   });
 
   initClosePopupByOverlay(imagePopup);
-  initClosePopupByEscape(imagePopup);
 
   // cards.prepend(newCard);
 

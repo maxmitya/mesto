@@ -8,18 +8,18 @@ const enableValidationConfig = {
 };
 
 // Функция вывода сообщения об ошибке в инпуте
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.add(enableValidationConfig.inputErrorClass);
+  inputElement.classList.add(config.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(enableValidationConfig.errorClass);
+  errorElement.classList.add(config.errorClass);
 };
 
 // Функция удаления сообщения об ошибке в инпуте
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.remove(enableValidationConfig.inputErrorClass);
-  errorElement.classList.remove(enableValidationConfig.errorClass);
+  inputElement.classList.remove(config.inputErrorClass);
+  errorElement.classList.remove(config.errorClass);
   errorElement.textContent = '';
 };
 
@@ -31,54 +31,53 @@ const hasInvalidInput = inputList => {
 };
 
 // Функция переключения состояния кнопки submit
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add(enableValidationConfig.inactiveButtonClass);
+    buttonElement.classList.add(config.inactiveButtonClass);
   } else {
     buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove(enableValidationConfig.inactiveButtonClass);
+    buttonElement.classList.remove(config.inactiveButtonClass);
   }
 };
 
 // Функция проверки валидности полей и форм с выводом сообщения об ошибке
 const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      enableValidationConfig
+    );
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, enableValidationConfig);
   }
 };
 
 // Функция добавления слушателей на все инпуты + работа кнопки submit
-const setEventListeners = formElement => {
-  const inputList = Array.from(formElement.querySelectorAll(enableValidationConfig.inputSelector));
-  const buttonElement = formElement.querySelector(enableValidationConfig.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
+const setEventListeners = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, enableValidationConfig);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement, enableValidationConfig);
     });
   });
 };
 
 // Функция включения валидации на формах
-const enableValidation = () => {
-  formList = Array.from(document.querySelectorAll(enableValidationConfig.formSelector));
+const enableValidation = config => {
+  formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach(formElement => {
     formElement.addEventListener('submit', evt => {
-      evt.preventDefault;
+      evt.preventDefault();
     });
 
-    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'));
-
-    fieldsetList.forEach(fieldSet => {
-      setEventListeners(fieldSet);
-    });
-
-    setEventListeners(formElement);
+    setEventListeners(formElement, config);
   });
 };
 
-enableValidation();
+enableValidation(enableValidationConfig);
