@@ -31,27 +31,30 @@ const hasInvalidInput = inputList => {
 };
 
 // Функция переключения состояния кнопки submit
+const enableButton = (buttonElement, config) => {
+  buttonElement.removeAttribute('disabled');
+  buttonElement.classList.remove(config.inactiveButtonClass);
+};
+
+const disableButton = (buttonElement, config) => {
+  buttonElement.setAttribute('disabled', true);
+  buttonElement.classList.add(config.inactiveButtonClass);
+};
+
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add(config.inactiveButtonClass);
+    disableButton(buttonElement, config);
   } else {
-    buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove(config.inactiveButtonClass);
+    enableButton(buttonElement, config);
   }
 };
 
 // Функция проверки валидности полей и форм с выводом сообщения об ошибке
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, config) => {
   if (!inputElement.validity.valid) {
-    showInputError(
-      formElement,
-      inputElement,
-      inputElement.validationMessage,
-      enableValidationConfig
-    );
+    showInputError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
-    hideInputError(formElement, inputElement, enableValidationConfig);
+    hideInputError(formElement, inputElement, config);
   }
 };
 
@@ -59,11 +62,11 @@ const checkInputValidity = (formElement, inputElement) => {
 const setEventListeners = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, enableValidationConfig);
+  toggleButtonState(inputList, buttonElement, config);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement, enableValidationConfig);
+      checkInputValidity(formElement, inputElement, config);
+      toggleButtonState(inputList, buttonElement, config);
     });
   });
 };

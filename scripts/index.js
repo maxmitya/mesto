@@ -22,13 +22,13 @@ const closePopupAdd = document.querySelector('#close-popup-add');
 //Функция открытия попа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  window.addEventListener('keydown', initClosePopupByEscape(popup));
+  window.addEventListener('keydown', initClosePopupByEscape);
 }
 
 //Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  window.removeEventListener('keydown', initClosePopupByEscape(popup));
+  window.removeEventListener('keydown', initClosePopupByEscape);
 }
 
 // Функция закрытия попапа кликом по заливке
@@ -41,12 +41,11 @@ function initClosePopupByOverlay(popup) {
 }
 
 // Функция закрытия попапа кликом на Esc
-function initClosePopupByEscape(popup) {
-  window.addEventListener('keydown', function (event) {
-    if (event.code == 'Escape') {
-      closePopup(popup);
-    }
-  });
+function initClosePopupByEscape(event) {
+  if (event.code == 'Escape') {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+  }
 }
 
 //Слушатель нажатия на кнопку открытия попапа редактирования
@@ -93,6 +92,8 @@ addForm.addEventListener('submit', function (event) {
   cards.prepend(newCard);
 
   addForm.reset();
+
+  disableButton(event.submitter, enableValidationConfig);
 
   closePopup(addPopup);
 });
