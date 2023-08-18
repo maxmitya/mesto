@@ -93,7 +93,7 @@ addForm.addEventListener('submit', function (event) {
 
   addForm.reset();
 
-  disableButton(event.submitter, enableValidationConfig);
+  disableButton(event.submitter);
 
   closePopup(addPopup);
 });

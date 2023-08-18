@@ -31,14 +31,14 @@ const hasInvalidInput = inputList => {
 };
 
 // Функция переключения состояния кнопки submit
-const enableButton = (buttonElement, config) => {
+const enableButton = buttonElement => {
   buttonElement.removeAttribute('disabled');
-  buttonElement.classList.remove(config.inactiveButtonClass);
+  buttonElement.classList.remove('popup__submit_disabled');
 };
 
-const disableButton = (buttonElement, config) => {
+const disableButton = buttonElement => {
   buttonElement.setAttribute('disabled', true);
-  buttonElement.classList.add(config.inactiveButtonClass);
+  buttonElement.classList.add('popup__submit_disabled');
 };
 
 const toggleButtonState = (inputList, buttonElement, config) => {
