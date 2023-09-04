@@ -7,7 +7,6 @@ const enableValidationConfig = {
   errorClass: 'popup__error_active'
 };
 
-// Функция вывода сообщения об ошибке в инпуте
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(config.inputErrorClass);
@@ -15,7 +14,6 @@ const showInputError = (formElement, inputElement, errorMessage, config) => {
   errorElement.classList.add(config.errorClass);
 };
 
-// Функция удаления сообщения об ошибке в инпуте
 const hideInputError = (formElement, inputElement, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.remove(config.inputErrorClass);
@@ -23,14 +21,12 @@ const hideInputError = (formElement, inputElement, config) => {
   errorElement.textContent = '';
 };
 
-// Проверка на наличие невалидных инпутов
 const hasInvalidInput = inputList => {
   return inputList.some(inputElement => {
     return !inputElement.validity.valid;
   });
 };
 
-// Функция переключения состояния кнопки submit
 const enableButton = (buttonElement, config) => {
   buttonElement.removeAttribute('disabled');
   buttonElement.classList.remove(config.inactiveButtonClass);
@@ -49,7 +45,6 @@ const toggleButtonState = (inputList, buttonElement, config) => {
   }
 };
 
-// Функция проверки валидности полей и форм с выводом сообщения об ошибке
 const checkInputValidity = (formElement, inputElement, config) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, config);
@@ -58,7 +53,6 @@ const checkInputValidity = (formElement, inputElement, config) => {
   }
 };
 
-// Функция добавления слушателей на все инпуты + работа кнопки submit
 const setEventListeners = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
@@ -71,14 +65,12 @@ const setEventListeners = (formElement, config) => {
   });
 };
 
-// Функция включения валидации на формах
 const enableValidation = config => {
   formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach(formElement => {
     formElement.addEventListener('submit', evt => {
       evt.preventDefault();
     });
-
     setEventListeners(formElement, config);
   });
 };
