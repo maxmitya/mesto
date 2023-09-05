@@ -78,10 +78,12 @@ editForm.addEventListener('submit', function (event) {
   closePopup(editPopup);
 });
 
+const addFormvalidation = new FormValidator(enableValidationConfig, addForm);
+addFormvalidation.enableValidation();
+
 //Слушатель нажатия на кнопку открытия попапа добавления
 openPopupAdd.addEventListener('click', function () {
   openPopup(addPopup);
-  new FormValidator(enableValidationConfig, addForm);
 });
 
 initClosePopupByOverlay(addPopup);
@@ -98,7 +100,8 @@ addForm.addEventListener('submit', function (event) {
   const cardElement = newCard.generateCard();
   cardSection.prepend(cardElement);
   addForm.reset();
-  disableButton(event.submitter, enableValidationConfig);
+  const formValidator = new FormValidator(enableValidationConfig, addForm);
+  formValidator.disableButton(event.submitter);
   closePopup(addPopup);
 });
 
