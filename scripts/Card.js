@@ -1,6 +1,7 @@
-import { initialCards } from './initialCards.js';
 import { openPopup } from './index.js';
 import { imagePopup } from './index.js';
+import { bigPopupImage } from './index.js';
+import { bigPopupTitle } from './index.js';
 
 export class Card {
   constructor(data, templateElement) {
@@ -11,7 +12,7 @@ export class Card {
 
   _getTemplate() {
     const cardElement = document
-      .querySelector('#card-template')
+      .querySelector(this._templateElement)
       .content.querySelector('.card')
       .cloneNode(true);
 
@@ -30,43 +31,36 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__button').addEventListener('click', () => {
-      this._handleLikeButton();
+    this._buttonElement = this._element.querySelector('.card__button');
+    this._cardTitle = this._element.querySelector('.card__title');
+    this._cardImg = this._element.querySelector('.card__image');
+
+    this._buttonElement.addEventListener('click', () => {
+      this._handleLikeButtonClick();
     });
 
     this._element.querySelector('.card__trash').addEventListener('click', () => {
-      this._handleDeleteButton();
+      this._handleDeleteButtonClick();
     });
 
     this._element.querySelector('.card__image').addEventListener('click', () => {
-      this._handleImage();
+      this._handleImageClick();
     });
   }
 
-  _handleDeleteButton() {
-    this._element.closest('.card').remove();
+  _handleDeleteButtonClick() {
+    this._element.remove();
+    this._element = null;
   }
 
-  _handleLikeButton() {
-    this._element.querySelector('.card__button').classList.toggle('card__button_active');
+  _handleLikeButtonClick() {
+    this._buttonElement.classList.toggle('card__button_active');
   }
 
-  _handleImage() {
-    const cardTitle = this._element.querySelector('.card__title');
-    const cardImg = this._element.querySelector('.card__image');
-    const bigPopupImage = imagePopup.querySelector('.popup__img');
-    const bigPopupTitle = imagePopup.querySelector('.popup__title');
+  _handleImageClick() {
     openPopup(imagePopup);
-    bigPopupTitle.textContent = cardTitle.textContent;
-    bigPopupImage.src = cardImg.src;
-    bigPopupImage.alt = cardImg.alt;
+    bigPopupTitle.textContent = this._cardTitle.textContent;
+    bigPopupImage.src = this._cardImg.src;
+    bigPopupImage.alt = this._cardImg.alt;
   }
 }
-
-initialCards.forEach(item => {
-  const cardSection = document.querySelector('.cards');
-  const card = new Card(item, '#card-template');
-  const cardElement = card.generateCard();
-
-  cardSection.prepend(cardElement);
-});
