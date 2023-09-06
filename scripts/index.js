@@ -29,11 +29,11 @@ const openEditPopupButton = document.querySelector('#open-popup-edit');
 const closeEditPopupButton = document.querySelector('#close-popup-edit');
 const openAddPopupButton = document.querySelector('#open-popup-add');
 const closeAddPopupButton = document.querySelector('#close-popup-add');
-const closeImagePopup = imagePopup.querySelector('#close-popup-image');
-closeImagePopup.addEventListener('click', function () {
+const closeImagePopupButton = imagePopup.querySelector('#close-popup-image');
+
+closeImagePopupButton.addEventListener('click', function () {
   closePopup(imagePopup);
 });
-const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 //Функция открытия попа
 export function openPopup(popup) {
@@ -64,14 +64,14 @@ function closePopupByEsc(event) {
   }
 }
 
-const handleOpenEditPopupButton = () => {
+const handleOpenEditPopupButtonClick = () => {
   openPopup(editPopup);
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
 };
 
 //Слушатель нажатия на кнопку открытия попапа редактирования
-openEditPopupButton.addEventListener('click', handleOpenEditPopupButton);
+openEditPopupButton.addEventListener('click', handleOpenEditPopupButtonClick);
 
 setClosePopupByOverlayListeners(editPopup);
 
@@ -90,7 +90,6 @@ editForm.addEventListener('submit', function (event) {
 
 const addFormValidation = new FormValidator(validationConfig, addForm);
 addFormValidation.enableValidation();
-addFormValidation.disableButton();
 
 const editFormValidation = new FormValidator(validationConfig, editForm);
 editFormValidation.enableValidation();
@@ -120,6 +119,7 @@ addForm.addEventListener('submit', function (event) {
     generateCard({ name: titleInput.value, link: imageInput.value }, '#card-template')
   );
   addForm.reset();
+  addFormValidation.disableButton();
   closePopup(addPopup);
 });
 

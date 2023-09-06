@@ -59,8 +59,8 @@ export class Card {
 
   _handleImageClick() {
     openPopup(imagePopup);
-    bigPopupTitle.textContent = this._cardTitle.textContent;
-    bigPopupImage.src = this._cardImg.src;
-    bigPopupImage.alt = this._cardImg.alt;
+    bigPopupTitle.textContent = this._name;
+    bigPopupImage.src = this._link;
+    bigPopupImage.alt = this._name;
   }
 }
